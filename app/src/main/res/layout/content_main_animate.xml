@@ -22,7 +22,8 @@
         android:src="@drawable/aangmeditates"
         android:onClick="animate"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginBottom="50dp"
+        android:alpha="1" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -33,7 +34,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:alpha="0"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp" />
 
@@ -53,10 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="23dp"
-        android:id="@+id/radioGroup"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:id="@+id/radioGroup"
         android:orientation="horizontal">
 
         <RadioButton
@@ -64,18 +65,22 @@
             android:layout_height="wrap_content"
             android:text="Fade"
             android:id="@+id/fadeRadioButton"
-            android:layout_alignBottom="@+id/radioGroup"
-            android:layout_alignStart="@+id/radioGroup"
-            android:layout_alignParentStart="true" />
+            android:layout_below="@+id/meditateImg"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="10dp" />
+
+
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Translate"
             android:id="@+id/translateRadioButton"
-            android:layout_alignBottom="@+id/radioGroup"
-            android:layout_alignStart="@+id/radioGroup"
+            android:layout_below="@+id/meditateImg"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_marginRight="10dp"
             />
 
         <RadioButton
@@ -83,8 +88,8 @@
             android:layout_height="wrap_content"
             android:text="Rotate"
             android:id="@+id/rotateRadioButton"
-            android:layout_alignBottom="@+id/radioGroup"
-            android:layout_alignStart="@+id/radioGroup"
+            android:layout_below="@+id/meditateImg"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             />
 

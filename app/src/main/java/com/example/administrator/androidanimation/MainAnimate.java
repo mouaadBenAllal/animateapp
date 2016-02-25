@@ -10,12 +10,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 public class MainAnimate extends AppCompatActivity {
     ImageView meditateImg;
     ImageView avatarImg;
     boolean isMeditate;
+    boolean fadeanimate = false;
+    boolean translateanimate = false;
+    boolean rotateanimate = false;
     long duurAnimatie;
     SeekBar seekBar;
     RadioButton fadeButton;
@@ -48,55 +52,108 @@ public class MainAnimate extends AppCompatActivity {
             }
         });
 
+        avatarImg.animate().alpha(0f).setDuration(0l);
+
         fadeButton = (RadioButton) findViewById(R.id.fadeRadioButton);
         fadeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fadeanimate = true;
+                rotateanimate = false;
+                translateanimate = false;
 
-            fade();
+                if (isMeditate){
+                    avatarImg.animate().alpha(0f);
+
+                }
+                else {
+                    meditateImg.animate().alpha(1f);
+                }
+                avatarImg.animate().translationX(0f).setDuration(0l);
+                meditateImg.animate().translationX(0f).setDuration(0l);
+                avatarImg.animate().scaleX(1f).scaleY(1f).setDuration(1l);
+                meditateImg.animate().scaleX(1f).scaleY(1f).setDuration(1l);
+
+
+
             }
+
         });
 
         translateButton = (RadioButton) findViewById(R.id.translateRadioButton);
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rotateAndScale();
-            }
+                translateanimate = true;
+                fadeanimate = false;
+                rotateanimate = false;
+                avatarImg.animate().alpha(1f);
+                meditateImg.animate().alpha(1f);
+                if (isMeditate){
+                    avatarImg.animate().translationX(-1000f).alpha(1f).setDuration(0l);
+                    avatarImg.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(1l);
+
+                }
+                else {
+                    meditateImg.animate().translationX(1000f).alpha(1f).setDuration(0l);
+                    meditateImg.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(1l);
+                }
+
+        }
         });
 
         rotateButton = (RadioButton) findViewById(R.id.rotateRadioButton);
         rotateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                avatarImg.animate().translationX(-1000).setDuration(0l);
-                avatarImg.animate()
-                        .scaleX(0f)
-                        .scaleY(0f)
-                        .setDuration(1l);
-                rotate();
+                avatarImg.animate().alpha(1f);
+                meditateImg.animate().alpha(1f);
+                rotateanimate = true;
+                fadeanimate = false;
+                translateanimate = false;
+
+                if(isMeditate){
+                    meditateImg.animate().translationX(0f).setDuration(0l);
+                    meditateImg.animate().alpha(1f).scaleX(0f).scaleY(0f).setDuration(1l);
+                }
+                else{
+                    avatarImg.animate().translationX(0f).setDuration(0l);
+                    avatarImg.animate().alpha(1f).scaleX(0f).scaleY(0f).setDuration(1l);
+                }
+
             }
         });
         isMeditate = true;
         duurAnimatie = 1500l;
         seekBar.setProgress((int)duurAnimatie);
+
+        fadeButton.setChecked(true);
+        translateButton.setChecked(false);
+        rotateButton.setChecked(false);
     }
 
     public void animate (View view) {
-
-        fade();
-        rotate();
-        rotateAndScale();
-        isMeditate = !isMeditate;
+        if (fadeanimate == true){
+            fade();
+        }
+        if (translateanimate == true){
+            rotate();
+        }
+        if (rotateanimate == true){
+            rotateAndScale();
+        }
     }
 
         private void fade() {
             if (isMeditate) {
                 meditateImg.animate().alpha(0f).setDuration(duurAnimatie);
                 avatarImg.animate().alpha(1f).setDuration(duurAnimatie);
-            } else {
+                isMeditate=false;
+            }
+            else {
                 meditateImg.animate().alpha(1f).setDuration(duurAnimatie);
                 avatarImg.animate().alpha(0f).setDuration(duurAnimatie);
+                isMeditate= true;
             }
 
         }
@@ -110,17 +167,18 @@ public class MainAnimate extends AppCompatActivity {
                     .setDuration(duurAnimatie);
             avatarImg.animate()
                     .translationX(0f)
-                    .setDuration(duurAnimatie)
-                    .alpha(1f);
+                    .setDuration(duurAnimatie);
+                    isMeditate = false;
         }
         else {
             meditateImg.animate()
                     .translationX(0l)
-                    .setDuration(duurAnimatie);
+                    .setDuration(duurAnimatie)
+                    .alpha(1f);
             avatarImg.animate()
                     .translationX(-1000f)
-                    .setDuration(duurAnimatie)
-                    .alpha(0f);
+                    .setDuration(duurAnimatie);
+                    isMeditate = true;
         }
 
     }
@@ -128,29 +186,29 @@ public class MainAnimate extends AppCompatActivity {
     private void rotateAndScale(){
         if (isMeditate) {
             meditateImg.animate()
-                    .rotation(720f)
+                    .rotation(1080f)
                     .scaleX(0f)
                     .scaleY(0f)
                     .setDuration(duurAnimatie);
             avatarImg.animate()
-                    .rotation(-720f)
+                    .rotation(-1080f)
                     .scaleX(1f)
                     .scaleY(1f)
-                    .setDuration(duurAnimatie)
-                    .alpha(1f);
+                    .setDuration(duurAnimatie);
+                    isMeditate = false;
         }
         else{
             meditateImg.animate()
-                    .rotation(-720f)
+                    .rotation(-1080f)
                     .scaleX(1f)
                     .scaleY(1f)
                     .setDuration(duurAnimatie);
             avatarImg.animate()
-                    .rotation(720f)
+                    .rotation(1080f)
                     .scaleX(0f)
                     .scaleY(0f)
-                    .setDuration(duurAnimatie)
-                    .alpha(0f);
+                    .setDuration(duurAnimatie);
+                    isMeditate = true;
 
         }
     }
